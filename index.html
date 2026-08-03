@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DogWalk - Paseo de Perros en La Florida, Santiago</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #1A1C1E;
+            color: #F4F4F2;
+            line-height: 1.6;
+        }
+
+        /* Colores principales */
+        :root {
+            --bg-dark: #1A1C1E;
+            --bg-light: #F4F4F2;
+            --accent: #C5FF4D;
+            --border: #4A4E54;
+            --text-secondary: #B5B8BB;
+            --text-muted: #9EA2A7;
+        }
+
+        section {
+            position: relative;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 92vh;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-dark);
+            position: relative;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-image: url('FOTO_DOG1.jpeg');
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+        }
+
+        .hero-badge {
+            position: absolute;
+            left: 24px;
+            top: 24px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--accent);
+        }
+
+        .hero-badge span {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero-time {
+            position: absolute;
+            right: 24px;
+            top: 80px;
+            z-index: 10;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.4);
+            padding: 12px 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--bg-light);
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 92vh;
+            padding: 24px;
+            padding-bottom: 96px;
+        }
+
+        @media (min-width: 768px) {
+            .hero-content {
+                padding: 0;
+                padding-right: 6vw;
+                padding-left: 6vw;
+                padding-bottom: 64px;
+            }
+
+            .hero-badge {
+                left: 6vw;
+                top: 36px;
+            }
+
+            .hero-time {
+                right: 6vw;
+                top: 36px;
+            }
+        }
+
+        .hero-kicker {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .hero-bg-text {
+            position: absolute;
+            bottom: 224px;
+            left: -32px;
+            font-size: 15vw;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.9;
+            letter-spacing: -0.07em;
+            color: rgba(255, 255, 255, 0.1);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        @media (min-width: 768px) {
+            .hero-bg-text {
+                bottom: 112px;
+            }
+        }
+
+        .hero-title-box {
+            position: relative;
+            width: fit-content;
+            background: var(--accent);
+            padding: 20px;
+            transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @media (min-width: 768px) {
+            .hero-title-box {
+                padding: 32px;
+            }
+        }
+
+        .hero-title {
+            font-size: 16vw;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.78;
+            letter-spacing: -0.07em;
+            color: var(--bg-dark);
+        }
+
+        @media (min-width: 768px) {
+            .hero-title {
+                font-size: 9vw;
+            }
+        }
+
+        .hero-cta {
+            margin-top: 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--bg-light);
+            text-decoration: none;
+            width: fit-content;
+            transition: gap 200ms;
+        }
+
+        .hero-cta:hover {
+            gap: 20px;
+        }
+
+        .hero-cta svg {
+            color: var(--accent);
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ===== STRIDE SELECTOR ===== */
+        .stride-section {
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-dark);
+            padding: 96px 24px;
+        }
+
+        @media (min-width: 768px) {
+            .stride-section {
+                padding: 128px 6vw;
+            }
+        }
+
+        .section-kicker {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+
+        .stride-header {
+            display: grid;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        @media (min-width: 1024px) {
+            .stride-header {
+                grid-template-columns: 1fr 1fr;
+                align-items: flex-end;
+            }
+        }
+
+        .display-title {
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: -0.05em;
+        }
+
+        @media (min-width: 768px) {
+            .display-title {
+                font-size: 64px;
+            }
+        }
+
+        .display-title span {
+            color: var(--accent);
+        }
+
+        .stride-description {
+            max-width: 448px;
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .stride-box {
+            border: 1px solid var(--border);
+            background: #202326;
+            padding: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .stride-box {
+                padding: 40px;
+            }
+        }
+
+        .stride-header-flex {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .stride-duration,
+        .stride-price {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stride-duration.right {
+            text-align: right;
+        }
+
+        .stride-label {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .stride-value {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--bg-light);
+        }
+
+        .stride-price .stride-value {
+            color: var(--accent);
+        }
+
+        .stride-slider-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .stride-slider-bg {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--border);
+            transform: translateY(-50%);
+        }
+
+        .stride-slider-fill {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 1px;
+            background: var(--accent);
+            transform: translateY(-50%);
+            transition: width 200ms ease-out;
+        }
+
+        .stride-slider-icon {
+            position: absolute;
+            top: -12px;
+            color: var(--accent);
+            transition: left 200ms ease-out;
+            width: 24px;
+            height: 24px;
+        }
+
+        .stride-range {
+            position: relative;
+            width: 100%;
+            height: 6px;
+            appearance: none;
+            background: transparent;
+            outline: none;
+            cursor: pointer;
+            z-index: 5;
+        }
+
+        .stride-range::-webkit-slider-thumb {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: var(--accent);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 0 6px rgba(197, 255, 77, 0.2);
+            transition: box-shadow 200ms;
+        }
+
+        .stride-range::-webkit-slider-thumb:active {
+            box-shadow: 0 0 0 12px rgba(197, 255, 77, 0.3);
+        }
+
+        .stride-range::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: var(--accent);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 0 6px rgba(197, 255, 77, 0.2);
+            transition: box-shadow 200ms;
+        }
+
+        .stride-range::-moz-range-thumb:active {
+            box-shadow: 0 0 0 12px rgba(197, 255, 77, 0.3);
+        }
+
+        .stride-labels {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 12px;
+        }
+
+        .stride-toggle {
+            margin-top: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 56px;
+            border: 1px solid var(--border);
+            padding: 0 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: transparent;
+            color: var(--bg-light);
+            cursor: pointer;
+            transition: all 200ms;
+            text-align: left;
+        }
+
+        .stride-toggle.active {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        .stride-toggle svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ===== SERVICE PROOF ===== */
+        .service-section {
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-light);
+            padding: 96px 24px;
+            color: var(--bg-dark);
+        }
+
+        @media (min-width: 768px) {
+            .service-section {
+                padding: 128px 6vw;
+            }
+        }
+
+        .service-section .service-image {
+            display: none;
+        }
+
+        .service-kicker {
+            color: var(--text-muted);
+        }
+
+        .service-grid {
+            margin-top: 0;
+            display: grid;
+            gap: 0;
+        }
+
+        @media (min-width: 768px) {
+            .service-grid {
+                grid-template-columns: 1fr;
+                align-items: center;
+                gap: 0;
+            }
+        }
+
+        .service-image {
+            height: 400px;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        @media (min-width: 768px) {
+            .service-image {
+                height: 600px;
+                width: 100%;
+            }
+        }
+
+        .service-protocol {
+            display: none;
+        }
+
+        .service-protocol-title {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--bg-dark);
+        }
+
+        .service-protocol-list {
+            margin-top: 32px;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .service-protocol-list li {
+            font-size: 20px;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(26, 28, 30, 0.3);
+            padding-bottom: 20px;
+            color: var(--bg-dark);
+        }
+
+        .service-protocol-list li:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .service-hours {
+            margin-top: 40px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            text-transform: uppercase;
+            color: var(--bg-dark);
+        }
+
+        .service-route {
+            display: none;
+        }
+
+        .service-route-image {
+            height: 256px;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .service-route-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 32px;
+        }
+
+        @media (min-width: 768px) {
+            .service-route-info {
+                padding: 48px;
+            }
+        }
+
+        .service-route-label {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--text-muted);
+        }
+
+        .service-route-title {
+            margin-top: 16px;
+            font-size: 32px;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        /* ===== ROSTER ===== */
+        .roster-section {
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-dark);
+            padding: 96px 24px;
+        }
+
+        @media (min-width: 768px) {
+            .roster-section {
+                padding: 128px 6vw;
+            }
+        }
+
+        .roster-header {
+            display: grid;
+            gap: 24px;
+            margin-bottom: 56px;
+        }
+
+        @media (min-width: 768px) {
+            .roster-header {
+                grid-template-columns: 1fr 1fr;
+                align-items: flex-end;
+                gap: 24px;
+            }
+        }
+
+        .roster-subtitle {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            max-width: 448px;
+        }
+
+        .roster-grid {
+            display: grid;
+            gap: 1px;
+            background: var(--border);
+        }
+
+        @media (min-width: 768px) {
+            .roster-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .roster-card {
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-dark);
+            aspect-ratio: 1;
+            group: "card";
+        }
+
+        .roster-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            filter: grayscale(100%);
+            transition: filter 700ms, transform 700ms;
+        }
+
+        .roster-card:hover .roster-image {
+            filter: grayscale(0%);
+            transform: scale(1.03);
+        }
+
+        .roster-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, black, transparent);
+            pointer-events: none;
+        }
+
+        .roster-badge {
+            position: absolute;
+            left: 24px;
+            top: 24px;
+            background: var(--accent);
+            padding: 8px 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--bg-dark);
+        }
+
+        .roster-content {
+            position: absolute;
+            inset-x: 0;
+            bottom: 0;
+            padding: 28px;
+        }
+
+        @media (min-width: 768px) {
+            .roster-content {
+                padding: 40px;
+            }
+        }
+
+        .roster-name {
+            font-size: 48px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.05em;
+            color: white;
+        }
+
+        .roster-phone {
+            display: inline-block;
+            margin-top: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 200ms;
+        }
+
+        .roster-phone:hover {
+            color: white;
+        }
+
+        .roster-route {
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            padding-top: 16px;
+            font-size: 14px;
+            color: white;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 300ms, transform 300ms;
+        }
+
+        .roster-card:hover .roster-route {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .roster-route svg {
+            color: var(--accent);
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--bg-dark);
+        }
+
+        .footer-hero {
+            padding: 80px 24px;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .footer-hero {
+                padding: 112px 6vw;
+            }
+        }
+
+        .footer-icon {
+            width: 38px;
+            height: 38px;
+            color: var(--accent);
+            margin: 0 auto 24px;
+        }
+
+        .footer-title {
+            font-size: 48px;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.9;
+            letter-spacing: -0.06em;
+            color: var(--bg-light);
+        }
+
+        @media (min-width: 768px) {
+            .footer-title {
+                font-size: 64px;
+            }
+        }
+
+        .footer-subtitle {
+            margin-top: 28px;
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        .footer-actions {
+            display: grid;
+            border-top: 1px solid var(--bg-dark);
+        }
+
+        @media (min-width: 768px) {
+            .footer-actions {
+                grid-template-columns: 1fr 1fr;
+                position: static;
+            }
+        }
+
+        .footer-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 80px;
+            border-top: 1px solid var(--bg-dark);
+            padding: 24px;
+            font-size: 18px;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: background 200ms;
+        }
+
+        @media (min-width: 768px) {
+            .footer-btn {
+                min-height: 144px;
+                padding: 24px 6vw;
+                font-size: 24px;
+            }
+        }
+
+        .footer-btn:nth-child(1) {
+            background: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        .footer-btn:nth-child(1):hover {
+            background: white;
+        }
+
+        .footer-btn:nth-child(2) {
+            background: var(--bg-light);
+            color: var(--bg-dark);
+        }
+
+        .footer-btn:nth-child(2):hover {
+            background: var(--accent);
+        }
+
+        .footer-btn svg {
+            width: 24px;
+            height: 24px;
+            transition: transform 200ms;
+        }
+
+        .footer-btn:hover svg {
+            transform: rotate(45deg);
+        }
+
+        .footer-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 32px 24px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+        }
+
+        @media (min-width: 768px) {
+            .footer-info {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 32px 6vw;
+            }
+        }
+
+        /* ===== ANIMACIONES ===== */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: slideIn 0.6s ease-out both;
+        }
+
+        section:nth-child(1) { animation-delay: 0s; }
+        section:nth-child(2) { animation-delay: 0.1s; }
+        section:nth-child(3) { animation-delay: 0.2s; }
+        section:nth-child(4) { animation-delay: 0.3s; }
+        section:nth-child(5) { animation-delay: 0.4s; }
+
+        /* Mobile optimizations */
+        @media (max-width: 480px) {
+            .display-title {
+                font-size: 32px;
+            }
+
+            .stride-value {
+                font-size: 28px;
+            }
+
+            .footer-title {
+                font-size: 36px;
+            }
+
+            .roster-name {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-badge">
+            <span></span>
+            Ahora abierto para reservas
+        </div>
+
+        <div class="hero-time" id="hero-time">[-- : -- — 14 perros en movimiento]</div>
+
+        <div class="hero-content">
+            <p class="hero-kicker">Cuidado canino · La Florida</p>
+            
+            <div class="hero-bg-text">La Florida en movimiento</div>
+            
+            <div class="hero-title-box" id="hero-box">
+                <h1 class="hero-title">Dogwalk</h1>
+            </div>
+
+            <a href="#selector" class="hero-cta">
+                Encuentra tu ritmo
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8"></path>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- ===== STRIDE SELECTOR ===== -->
+    <section class="stride-section" id="selector">
+        <p class="section-kicker">01 / Define la zancada</p>
+
+        <div class="stride-header">
+            <div>
+                <h2 class="display-title">Tu paseo.<br><span>Tu ritmo.</span></h2>
+            </div>
+            <p class="stride-description">Ejercicio profesional, seguro y calibrado a la energía de tu perro. Correa incluida.</p>
+        </div>
+
+        <div class="stride-box">
+            <div class="stride-header-flex">
+                <div class="stride-duration">
+                    <span class="stride-label">Duración</span>
+                    <p class="stride-value" id="stride-minutes">45 MIN</p>
+                </div>
+                <div class="stride-duration right">
+                    <span class="stride-label">Tarifa</span>
+                    <p class="stride-value" id="stride-price">$8.500</p>
+                </div>
+            </div>
+
+            <div class="stride-slider-container">
+                <div class="stride-slider-bg"></div>
+                <div class="stride-slider-fill" id="stride-fill"></div>
+                <svg class="stride-slider-icon" id="stride-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+                <input 
+                    id="stride-range" 
+                    class="stride-range" 
+                    type="range" 
+                    min="30" 
+                    max="60" 
+                    step="15" 
+                    value="45"
+                    aria-label="Duración del paseo"
+                >
+            </div>
+
+            <div class="stride-labels">
+                <span>30 MIN</span>
+                <span>45 MIN</span>
+                <span>60 MIN</span>
+            </div>
+
+            <button class="stride-toggle" id="weekly-toggle" aria-pressed="false">
+                <span>Compromiso semanal · Ahorra 10%</span>
+                <svg id="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:none;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- ===== SERVICE PROOF ===== -->
+    <section class="service-section">
+        <p class="section-kicker service-kicker">02 / Control en cada metro</p>
+        <h2 class="display-title" style="color: var(--bg-dark);">Energía libre.<br><span style="color: var(--bg-dark);">Cuidado preciso.</span></h2>
+
+        <div class="service-grid">
+            <img 
+                class="service-image" 
+                src="FOTO_DOG3.jpeg" 
+                alt="Paseador controlando varias correas durante una caminata"
+            >
+            <div class="service-protocol">
+                <p class="service-protocol-title">Protocolo DogWalk</p>
+                <ul class="service-protocol-list">
+                    <li>01 — Paseadores certificados</li>
+                    <li>02 — Fotos por WhatsApp</li>
+                    <li>03 — Correa de seguridad incluida</li>
+                    <li>04 — Residentes de La Florida</li>
+                </ul>
+                <p class="service-hours">Operación diaria · 07:00—21:00</p>
+            </div>
+        </div>
+
+        <div class="service-route">
+            <img 
+                class="service-route-image" 
+                src="FOTO_DOG4.jpeg" 
+                alt="Vista de cobertura en La Florida"
+            >
+            <div class="service-route-info">
+                <span class="service-route-label">Cobertura local</span>
+                <p class="service-route-title">Toda La Florida.<br>Sin rutas genéricas.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ROSTER ===== -->
+    <section class="roster-section">
+        <p class="section-kicker">03 / Equipo de terreno</p>
+        
+        <div class="roster-header">
+            <h2 class="display-title">Confianza<br><span>hiperlocal.</span></h2>
+            <p class="roster-subtitle">Dos profesionales. Un estándar: cada perro vuelve ejercitado, seguro y feliz.</p>
+        </div>
+
+        <div class="roster-grid" id="roster-grid">
+            <!-- Roster cards generadas por JS -->
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-hero">
+            <svg class="footer-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+            </svg>
+            <h2 class="footer-title">Tu primer paseo empieza ahora.</h2>
+            <p class="footer-subtitle">Elige a tu paseador y conversa directo por WhatsApp.</p>
+        </div>
+
+        <div class="footer-actions" id="footer-actions">
+            <!-- Botones generados por JS -->
+        </div>
+
+        <div class="footer-info">
+            <span>DogWalk © 2026</span>
+            <span>La Florida · Santiago de Chile</span>
+            <span>Porque tu mascota también necesita moverse</span>
+        </div>
+    </footer>
+
+    <script>
+        // ===== DATOS =====
+        const walkers = [
+            {
+                name: "Kevin",
+                phone: "56989772421",
+                display: "+56 9 8977 2421",
+                image: "FOTO_DOG5.jpeg",
+                route: "Vicuña Mackenna → Walker Martínez"
+            },
+            {
+                name: "Fernanda",
+                phone: "56997309013",
+                display: "+56 9 9730 9013",
+                image: "FOTO_DOG6.jpeg",
+                route: "Rojas Magallanes → Trinidad"
+            }
+        ];
+
+        const prices = {
+            30: 6000,
+            45: 8500,
+            60: 11000
+        };
+
+        // ===== HERO TIME =====
+        function updateTime() {
+            const now = new Date();
+            const formatter = new Intl.DateTimeFormat("es-CL", {
+                timeZone: "America/Santiago",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false
+            });
+            const time = formatter.format(now);
+            document.getElementById("hero-time").textContent = `[${time} — 14 perros en movimiento]`;
+        }
+
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // ===== HERO PARALLAX =====
+        const heroBox = document.getElementById("hero-box");
+        document.getElementById("hero").addEventListener("mousemove", (e) => {
+            const rect = heroBox.getBoundingClientRect();
+            const offsetX = (e.clientX / window.innerWidth - 0.5) * 14;
+            const offsetY = (e.clientY / window.innerHeight - 0.5) * 14;
+            heroBox.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0)`;
+        });
+
+        // ===== STRIDE SELECTOR =====
+        const strideRange = document.getElementById("stride-range");
+        const strideMinutes = document.getElementById("stride-minutes");
+        const stridePrice = document.getElementById("stride-price");
+        const slideFill = document.getElementById("stride-fill");
+        const sliderIcon = document.getElementById("stride-icon");
+        const weeklyToggle = document.getElementById("weekly-toggle");
+        const checkIcon = document.getElementById("check-icon");
+
+        let isWeekly = false;
+
+        function updateStride() {
+            const minutes = parseInt(strideRange.value);
+            let price = prices[minutes];
+
+            // Actualizar precio con descuento
+            if (isWeekly) {
+                price = Math.round(price * 0.9);
+            }
+
+            strideMinutes.textContent = `${minutes} MIN`;
+            stridePrice.textContent = `$${price.toLocaleString("es-CL")}`;
+
+            // Actualizar slider visual
+            const percentage = ((minutes - 30) / 30) * 100;
+            slideFill.style.width = `${percentage}%`;
+            sliderIcon.style.left = `calc(${percentage}% - 12px)`;
+        }
+
+        strideRange.addEventListener("input", updateStride);
+
+        weeklyToggle.addEventListener("click", () => {
+            isWeekly = !isWeekly;
+            weeklyToggle.classList.toggle("active", isWeekly);
+            weeklyToggle.setAttribute("aria-pressed", isWeekly);
+            checkIcon.style.display = isWeekly ? "block" : "none";
+            updateStride();
+        });
+
+        updateStride();
+
+        // ===== ROSTER =====
+        const rosterGrid = document.getElementById("roster-grid");
+        walkers.forEach((walker, index) => {
+            const card = document.createElement("article");
+            card.className = "roster-card";
+            card.innerHTML = `
+                <img src="${walker.image}" alt="${walker.name}" class="roster-image">
+                <div class="roster-overlay"></div>
+                <div class="roster-badge">DW-0${index + 1}</div>
+                <div class="roster-content">
+                    <h3 class="roster-name">${walker.name}</h3>
+                    <a href="tel:+${walker.phone}" class="roster-phone">${walker.display}</a>
+                    <div class="roster-route">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        Ruta reciente: ${walker.route}
+                    </div>
+                </div>
+            `;
+            rosterGrid.appendChild(card);
+        });
+
+        // ===== FOOTER ACTIONS =====
+        const message = encodeURIComponent("Hola, quiero reservar un paseo para mi perro en La Florida.");
+        const footerActions = document.getElementById("footer-actions");
+
+        walkers.forEach((walker) => {
+            const link = document.createElement("a");
+            link.href = `https://wa.me/${walker.phone}?text=${message}`;
+            link.target = "_blank";
+            link.rel = "noreferrer";
+            link.className = "footer-btn";
+            link.innerHTML = `
+                Reservar con ${walker.name}
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+            `;
+            footerActions.appendChild(link);
+        });
+    </script>
+</body>
+</html>
